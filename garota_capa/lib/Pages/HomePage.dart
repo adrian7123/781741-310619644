@@ -1,19 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-
+import 'package:garota_capa/App/DB.dart';
 class HomePage extends StatelessWidget {
-  final dbRef = FirebaseDatabase.instance.reference();
+  final db = DB();
+
+  final _textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: RaisedButton(child: Text('click'), onPressed: () {
-          dbRef.child('number 1').set({
-            'id': 'number',
-            'data': 'I am Data'
-          });
-     })
+      body: Container(
+        margin: EdgeInsets.all(20),
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Adicionar ao Banco'
+                  ),
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(child: 
+              RaisedButton(
+                child: Text('Cadastrar'),
+                onPressed: () => db.write({
+                  'name': 'Adrian',
+                  'sla': _textController.text
+                }),
+              ))
+            ],
+          )
+            
+              
+              
         
+        ],
+      )
       )
     );
   }
