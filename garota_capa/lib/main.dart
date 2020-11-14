@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'Pages/HomePage.dart';
+import 'package:garota_capa/Pages/HomePage.dart';
 
 void main() {
   runApp(MyApp());
