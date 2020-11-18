@@ -7,19 +7,13 @@ part 'home_controller.g.dart';
 class HomeController = _HomeController with _$HomeController;
 
 abstract class _HomeController with Store {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   @observable
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @action
   Future<void> increment(UserModel user) {
     return users
-        .add({
-          'nome': user.nome, // John Doe
-          'email': user.email, // Stokes and Sons
-          'token': user.token // 42
-        })
+        .add({'nome': user.nome, 'email': user.email, 'token': user.token})
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
