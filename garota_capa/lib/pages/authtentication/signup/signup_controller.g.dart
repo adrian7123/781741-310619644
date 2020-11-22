@@ -24,15 +24,24 @@ mixin _$SignUpController on _SignUpController, Store {
     });
   }
 
+  final _$signupAsyncAction = AsyncAction('_SignUpController.signup');
+
+  @override
+  Future<String> signup(
+      {String nome, String sobrenome, String email, String senha}) {
+    return _$signupAsyncAction.run(() => super
+        .signup(nome: nome, sobrenome: sobrenome, email: email, senha: senha));
+  }
+
   final _$_SignUpControllerActionController =
       ActionController(name: '_SignUpController');
 
   @override
-  void loading(dynamic Function() callback) {
+  void loading() {
     final _$actionInfo = _$_SignUpControllerActionController.startAction(
         name: '_SignUpController.loading');
     try {
-      return super.loading(callback);
+      return super.loading();
     } finally {
       _$_SignUpControllerActionController.endAction(_$actionInfo);
     }

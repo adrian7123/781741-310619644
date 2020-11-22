@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:garota_capa/utils/text_to_md5.dart';
 import 'package:mobx/mobx.dart';
 
 part 'signup_controller.g.dart';
@@ -10,27 +12,38 @@ abstract class _SignUpController with Store {
   bool busy = false;
 
   @action
-  void loading(Function() callback) {
+  void loading() {
     busy = true;
-    callback();
   }
 
+  @action
   Future<String> signup(
       {String nome, String sobrenome, String email, String senha}) async {
+    senha = textToMd5(senha.trim());
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email.trim(), password: senha.trim());
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email.trim(), password: senha);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return e.code;
-      } else if (e.code == 'email-already-in-use') {
-        return e.code;
+      busy = false;
+      if (e.code == 'email-already-in-use') {
+        return 'Email já Cadastrado';
+      } else if (e.code == 'invalid-email') {
+        return 'Email invalido';
       } else {
         return e.code;
       }
-    } catch (e) {
-      print(e);
     }
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    users
+        .add({
+          'nome': nome.trim(),
+          'sobrenome': sobrenome.trim(),
+          'email': email.trim(),
+          'senha': senha
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
 
     return '';
   }

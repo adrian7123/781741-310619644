@@ -60,24 +60,22 @@ class SignInPage extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               )
                             : ElevatedButton(
-                                onPressed: () => controller.loading(
-                                  () async {
-                                    if (_formKey.currentState.validate()) {
-                                      var result =
-                                          await controller.signin(email, senha);
-                                      if (result == '') {
-                                        Navigator.pushReplacementNamed(
-                                            context, '/');
-                                      }
-
-                                      final snackBar = SnackBar(
-                                        content: Text('$result'),
-                                      );
-                                      Scaffold.of(context)
-                                          .showSnackBar(snackBar);
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    controller.loading();
+                                    var result =
+                                        await controller.signin(email, senha);
+                                    if (result == '') {
+                                      Navigator.pushReplacementNamed(
+                                          context, '/');
                                     }
-                                  },
-                                ),
+
+                                    final snackBar = SnackBar(
+                                      content: Text('$result'),
+                                    );
+                                    Scaffold.of(context).showSnackBar(snackBar);
+                                  }
+                                },
                                 child: Text('login'),
                               ),
                       ),

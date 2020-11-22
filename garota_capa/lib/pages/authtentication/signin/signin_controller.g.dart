@@ -35,11 +35,11 @@ mixin _$SignInController on _SignInController, Store {
       ActionController(name: '_SignInController');
 
   @override
-  void loading(dynamic Function() callback) {
+  void loading() {
     final _$actionInfo = _$_SignInControllerActionController.startAction(
         name: '_SignInController.loading');
     try {
-      return super.loading(callback);
+      return super.loading();
     } finally {
       _$_SignInControllerActionController.endAction(_$actionInfo);
     }
