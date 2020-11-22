@@ -12,11 +12,11 @@ void showAlertDialog(BuildContext context, Function(UserModel) button) {
       children: [
         TextField(
           controller: _nomeController,
-          decoration: InputDecoration(hintText: 'Nome'),
+          decoration: InputDecoration(labelText: 'Nome'),
         ),
         TextField(
           controller: _emailController,
-          decoration: InputDecoration(hintText: 'Email'),
+          decoration: InputDecoration(labelText: 'Email'),
         ),
       ],
     ),

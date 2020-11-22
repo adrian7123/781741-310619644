@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:garota_capa/auth/auth_controller.dart';
 import 'package:garota_capa/models/user_model.dart';
 import 'package:mobx/mobx.dart';
 
@@ -7,6 +8,8 @@ part 'home_controller.g.dart';
 class HomeController = _HomeController with _$HomeController;
 
 abstract class _HomeController with Store {
+  AuthController auth;
+
   @observable
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
