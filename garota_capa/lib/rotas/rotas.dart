@@ -5,8 +5,9 @@ import 'package:garota_capa/pages/home/home_page.dart';
 import 'package:garota_capa/pages/root_page.dart';
 
 Map<String, Widget Function(BuildContext)> rotas = {
-  '/': (_) => RootPage(), //,
+  '/': (_) => RootPage(),
   'home': (_) => HomePage(),
   'signIn': (_) => SignInPage(),
   'signUp': (_) => SignUpPage(),
+  // 'config': (_) =>
 };
