@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Garota Capa',
-      theme: ThemeData.light(),
+      theme: ThemeData(primaryColor: Colors.cyan),
       routes: rotas,
     );
   }

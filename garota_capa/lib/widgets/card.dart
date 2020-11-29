@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:garota_capa/widgets/texts.dart';
 
-class Cardizinho extends StatelessWidget {
+class CardWidget extends StatelessWidget {
   final String nome;
   final String email;
 
-  Cardizinho({this.nome, this.email});
+  CardWidget({this.nome, this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +13,8 @@ class Cardizinho extends StatelessWidget {
       margin: EdgeInsets.all(30),
       child: Column(
         children: [
-          Text(nome, style: TextStyle(fontSize: 30)),
-          Text(email),
+          TextH1(nome),
+          TextP(email),
         ],
       ),
     );
