@@ -11,7 +11,7 @@ abstract class _HomeController with Store {
   AuthController auth;
 
   @observable
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  CollectionReference users = FirebaseFirestore.instance.collection('todo');
 
   @action
   Future<void> increment(UserModel user) {
@@ -19,5 +19,10 @@ abstract class _HomeController with Store {
         .add({'nome': user.nome, 'email': user.email, 'token': user.token})
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  remove(String doc) {
+    users.doc(doc).delete();
+    print('User Deleted');
   }
 }

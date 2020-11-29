@@ -36,11 +36,11 @@ abstract class _SignUpController with Store {
 
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     users
-        .add({
+        .doc(email.trim())
+        .set({
           'nome': nome.trim(),
           'sobrenome': sobrenome.trim(),
           'email': email.trim(),
-          'senha': senha
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));

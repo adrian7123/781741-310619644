@@ -46,6 +46,7 @@ class AddUserWidget extends StatelessWidget {
                       email: _emailController.text,
                       token: 'vgzhsd');
                   callback(user);
+                  Navigator.pop(context);
                 },
               ),
             ),

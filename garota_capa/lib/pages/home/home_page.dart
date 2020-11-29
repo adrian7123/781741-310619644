@@ -37,11 +37,13 @@ class HomePage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              return new ListView(
+              return ListView(
                 children: snapshot.data.docs
-                    .map((DocumentSnapshot document) => CardWidget(
-                          nome: document.data()['nome'],
-                          email: document.data()['email'],
+                    .map((DocumentSnapshot doc) => CardWidget(
+                          item: doc.id,
+                          nome: doc.data()['nome'],
+                          email: doc.data()['email'],
+                          onDimissed: controller.remove,
                         ))
                     .toList(),
               );
@@ -50,10 +52,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: () {
-        //   user.signOut();
-        //   Navigator.pushReplacementNamed(context, '/');
-        // },
         onPressed: () async {
           showModalBottomSheet(
               context: context,

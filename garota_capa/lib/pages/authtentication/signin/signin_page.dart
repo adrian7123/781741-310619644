@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:garota_capa/widgets/texts.dart';
 import './signin_controller.dart';
 
 class SignInPage extends StatelessWidget {
@@ -14,7 +15,10 @@ class SignInPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: TextH1(
+            'Login',
+            color: Colors.white,
+          ),
         ),
         body: Builder(builder: (context) {
           return SingleChildScrollView(

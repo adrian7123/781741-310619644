@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:garota_capa/pages/authtentication/signup/signup_controller.dart';
+import 'package:garota_capa/widgets/texts.dart';
 
 class SignUpPage extends StatelessWidget {
   final SignUpController controller = SignUpController();
@@ -17,7 +18,10 @@ class SignUpPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Cadastre-se'),
+          title: TextH1(
+            'Cadastre-se',
+            color: Colors.white,
+          ),
         ),
         body: Builder(builder: (context) {
           return SingleChildScrollView(
