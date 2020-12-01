@@ -18,15 +18,26 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: TextH1(
-          user.getEmail == null ? 'User not found' : user.getEmail,
+          'Adrian',
           color: Colors.white,
         ),
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: Icon(
+                Icons.account_circle,
+              ),
+              onPressed: () => Navigator.pushNamed(context, 'config'),
+            ),
+          ),
+        ],
       ),
       body: Container(
         child: Observer(
           builder: (_) => StreamBuilder<QuerySnapshot>(
             stream: controller.users.snapshots(),
-            builder: (context, snapshot) {
+            builder: (_, snapshot) {
               if (snapshot.hasError) {
                 return Center(
                   child: TextP("error"),

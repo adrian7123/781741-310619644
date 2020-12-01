@@ -42,8 +42,12 @@ class AddUserWidget extends StatelessWidget {
                 ),
                 onPressed: () {
                   UserModel user = new UserModel(
-                      nome: _nomeController.text,
-                      email: _emailController.text,
+                      nome: _nomeController.text == ''
+                          ? 'user'
+                          : _nomeController.text,
+                      email: _emailController.text == ''
+                          ? 'email'
+                          : _emailController.text,
                       token: 'vgzhsd');
                   callback(user);
                   Navigator.pop(context);

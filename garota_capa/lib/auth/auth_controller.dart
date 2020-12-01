@@ -1,9 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthController {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseAuth _auth;
 
-  String get getEmail => _auth.currentUser.email;
+  AuthController() {
+    this._auth = FirebaseAuth.instance;
+  }
+
+  String get email => _auth.currentUser.email;
 
   void signOut() async {
     await _auth.signOut();
