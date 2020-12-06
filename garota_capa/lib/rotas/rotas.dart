@@ -10,5 +10,5 @@ Map<String, Widget Function(BuildContext)> rotas = {
   'home': (_) => HomePage(),
   'signIn': (_) => SignInPage(),
   'signUp': (_) => SignUpPage(),
-  'config': (_) => PerfilPage(),
+  'perfil': (_) => PerfilPage(),
 };

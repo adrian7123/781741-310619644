@@ -17,7 +17,7 @@ abstract class _HomeController with Store {
         .add({
           'nome': user.nome,
           'email': user.email,
-          'token': user.token,
+          'sobrenome': user.sobrenome,
           'created_at': _currentDate,
         })
         .then((value) => print("User Added"))

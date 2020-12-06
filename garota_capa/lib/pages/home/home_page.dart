@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:garota_capa/auth/auth_controller.dart';
+import 'package:garota_capa/auth/auth_auth.dart';
+import 'package:garota_capa/models/user_model.dart';
+import 'package:garota_capa/pages/todo/todo_page.dart';
 import 'package:garota_capa/widgets/add_user.dart';
 import 'package:garota_capa/widgets/card.dart';
 import 'package:garota_capa/widgets/texts.dart';
@@ -11,25 +13,29 @@ import './home_controller.dart';
 class HomePage extends StatelessWidget {
   final controller = HomeController();
 
-  final user = new AuthController();
+  final AuthAuth _auth = AuthAuth();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextH1(
-          'Adrian',
-          color: Colors.white,
-        ),
+        title: FutureBuilder<UserModel>(
+            future: _auth.getUserData(),
+            builder: (_, snapshot) {
+              UserModel _user = snapshot.data;
+              if (snapshot.connectionState == ConnectionState.waiting)
+                return Container();
+              return TextH1(
+                _user.nome,
+                color: Colors.white,
+              );
+            }),
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 20),
-            child: IconButton(
-              icon: Icon(
-                Icons.account_circle,
-              ),
-              onPressed: () => Navigator.pushNamed(context, 'config'),
+          IconButton(
+            icon: Icon(
+              Icons.account_circle,
             ),
+            onPressed: () => Navigator.pushNamed(context, 'perfil'),
           ),
         ],
       ),
@@ -50,11 +56,19 @@ class HomePage extends StatelessWidget {
               }
               return ListView(
                 children: snapshot.data.docs
-                    .map((DocumentSnapshot doc) => CardWidget(
-                          item: doc.id,
-                          nome: doc.data()['nome'],
-                          email: doc.data()['email'],
-                          onDimissed: controller.remove,
+                    .map((DocumentSnapshot doc) => GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => TodoPage(
+                                      nome: doc.data()['nome'],
+                                      email: doc.data()['email']))),
+                          child: CardWidget(
+                            item: doc.id,
+                            nome: doc.data()['nome'],
+                            email: doc.data()['email'],
+                            onDimissed: controller.remove,
+                          ),
                         ))
                     .toList(),
               );
