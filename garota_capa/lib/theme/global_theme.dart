@@ -10,7 +10,7 @@ String enumName(AppTheme anyEnum) {
 
 final appThemeData = {
   AppTheme.White:
-      ThemeData(brightness: Brightness.light, primaryColor: Colors.white),
+      ThemeData(brightness: Brightness.light, primaryColor: Colors.blue),
   AppTheme.Dark:
       ThemeData(brightness: Brightness.dark, primaryColor: Colors.black),
   AppTheme.LightGreen:

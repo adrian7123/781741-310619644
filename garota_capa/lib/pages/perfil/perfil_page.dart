@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:garota_capa/auth/auth_auth.dart';
 import 'package:garota_capa/models/user_model.dart';
 import 'package:garota_capa/pages/perfil/perfil_controller.dart';
+import 'package:garota_capa/repositories/user_repository.dart';
 import 'package:garota_capa/theme/global_theme.dart';
 import 'package:garota_capa/widgets/texts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class _PerfilPageState extends State<PerfilPage> {
-  AuthAuth _auth = AuthAuth();
-
   PerfilController controller = PerfilController();
 
   TextEditingController _nomeController = TextEditingController();
@@ -18,55 +16,57 @@ class _PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
+    UserRepository _users = UserRepository();
+
     final GlobalTheme globalTheme = Provider.of<GlobalTheme>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: TextH1('Perfil'),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () {
-                _auth.signOut(context);
-              })
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Center(
-                child: Container(
-                  height: 280,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(
-                      'assets/menina-tumblr.jpg',
-                      fit: BoxFit.contain,
+    return FutureBuilder<UserModel>(
+      future: _users.getUserData(),
+      builder: (_, snap) {
+        if (snap.hasError) {
+          return Center(
+            child: TextP("error"),
+          );
+        }
+
+        if (snap.connectionState == ConnectionState.waiting) {
+          return Container();
+        }
+
+        UserModel _user = snap.data;
+
+        _nomeController.text = _user.nome;
+        _emailController.text = _user.email;
+        return Scaffold(
+          appBar: AppBar(
+            title: TextH1('Perfil'),
+            actions: [
+              IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () {
+                    _users.signOut(context);
+                  })
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Center(
+                    child: Container(
+                      height: 280,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.asset(
+                          'assets/menina-tumblr.jpg',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            FutureBuilder<UserModel>(
-              future: _auth.getUserData(),
-              builder: (_, snap) {
-                if (snap.hasError) {
-                  return Center(
-                    child: TextP("error"),
-                  );
-                }
-
-                if (snap.connectionState == ConnectionState.waiting) {
-                  return Container();
-                }
-
-                UserModel _user = snap.data;
-
-                _nomeController.text = _user.nome;
-                _emailController.text = _user.email;
-                return Container(
+                Container(
                   child: Observer(
                     builder: (_) => controller.onChange
                         ? Center(
@@ -114,28 +114,28 @@ class _PerfilPageState extends State<PerfilPage> {
                             ),
                           ),
                   ),
-                );
-              },
+                ),
+                Container(
+                  width: double.infinity,
+                  child: RaisedButton(
+                      child: Text('Switch theme'),
+                      onPressed: () {
+                        globalTheme.setTheme();
+                      }),
+                )
+              ],
             ),
-            Container(
-              width: double.infinity,
-              child: RaisedButton(
-                  child: Text('Switch theme'),
-                  onPressed: () {
-                    globalTheme.setTheme();
-                  }),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Observer(
-            builder: (_) =>
-                Icon(controller.onChange ? Icons.done : Icons.edit)),
-        onPressed: () {
-          controller.setOnChange(!controller.onChange);
-        },
-      ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Observer(
+                builder: (_) =>
+                    Icon(controller.onChange ? Icons.done : Icons.edit)),
+            onPressed: () {
+              controller.setOnChange(!controller.onChange);
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:garota_capa/models/user_model.dart';
+import 'package:garota_capa/repositories/todo_repository.dart';
+import 'package:garota_capa/repositories/user_repository.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_controller.g.dart';
@@ -7,13 +9,15 @@ part 'home_controller.g.dart';
 class HomeController = _HomeController with _$HomeController;
 
 abstract class _HomeController with Store {
+  UserRepository user = UserRepository();
+
   @observable
-  CollectionReference users = FirebaseFirestore.instance.collection('todo');
+  CollectionReference todos = TodoRepository.todo;
 
   @action
   Future<void> increment(UserModel user) {
     var _currentDate = new DateTime.now();
-    return users
+    return todos
         .add({
           'nome': user.nome,
           'email': user.email,
@@ -25,7 +29,7 @@ abstract class _HomeController with Store {
   }
 
   void remove(String doc) {
-    users.doc(doc).delete();
+    todos.doc(doc).delete();
     print('User Deleted');
   }
 }

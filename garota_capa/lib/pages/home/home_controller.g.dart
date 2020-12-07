@@ -9,18 +9,18 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeController, Store {
-  final _$usersAtom = Atom(name: '_HomeController.users');
+  final _$todosAtom = Atom(name: '_HomeController.todos');
 
   @override
-  CollectionReference get users {
-    _$usersAtom.reportRead();
-    return super.users;
+  CollectionReference get todos {
+    _$todosAtom.reportRead();
+    return super.todos;
   }
 
   @override
-  set users(CollectionReference value) {
-    _$usersAtom.reportWrite(value, super.users, () {
-      super.users = value;
+  set todos(CollectionReference value) {
+    _$todosAtom.reportWrite(value, super.todos, () {
+      super.todos = value;
     });
   }
 
@@ -41,7 +41,7 @@ mixin _$HomeController on _HomeController, Store {
   @override
   String toString() {
     return '''
-users: ${users}
+todos: ${todos}
     ''';
   }
 }

@@ -1,14 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:garota_capa/models/user_model.dart';
 
-class AuthAuth {
+class UserRepository {
   FirebaseAuth _auth;
-
   CollectionReference _user;
 
-  AuthAuth() {
+  String nome;
+
+  UserRepository() {
     this._auth = FirebaseAuth.instance;
     this._user = FirebaseFirestore.instance.collection('users');
   }
