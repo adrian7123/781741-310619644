@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:garota_capa/auth/auth_auth.dart';
 import 'package:garota_capa/models/user_model.dart';
 import 'package:garota_capa/pages/perfil/perfil_controller.dart';
-import 'package:garota_capa/pages/theme/global_theme.dart';
+import 'package:garota_capa/theme/global_theme.dart';
 import 'package:garota_capa/widgets/texts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -31,43 +31,42 @@ class _PerfilPageState extends State<PerfilPage> {
               })
         ],
       ),
-      body: FutureBuilder<UserModel>(
-        future: _auth.getUserData(),
-        builder: (_, snap) {
-          if (snap.hasError) {
-            return Center(
-              child: TextP("error"),
-            );
-          }
-
-          if (snap.connectionState == ConnectionState.waiting) {
-            return Container();
-          }
-
-          UserModel _user = snap.data;
-
-          _nomeController.text = _user.nome;
-          _emailController.text = _user.email;
-
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Center(
-                    child: Container(
-                      height: 280,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          'assets/menina-tumblr.jpg',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Center(
+                child: Container(
+                  height: 280,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.asset(
+                      'assets/menina-tumblr.jpg',
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                Container(
+              ),
+            ),
+            FutureBuilder<UserModel>(
+              future: _auth.getUserData(),
+              builder: (_, snap) {
+                if (snap.hasError) {
+                  return Center(
+                    child: TextP("error"),
+                  );
+                }
+
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return Container();
+                }
+
+                UserModel _user = snap.data;
+
+                _nomeController.text = _user.nome;
+                _emailController.text = _user.email;
+                return Container(
                   child: Observer(
                     builder: (_) => controller.onChange
                         ? Center(
@@ -115,19 +114,19 @@ class _PerfilPageState extends State<PerfilPage> {
                             ),
                           ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: RaisedButton(
-                      child: Text('Switch theme'),
-                      onPressed: () {
-                        globalTheme.changeTheme();
-                      }),
-                )
-              ],
+                );
+              },
             ),
-          );
-        },
+            Container(
+              width: double.infinity,
+              child: RaisedButton(
+                  child: Text('Switch theme'),
+                  onPressed: () {
+                    globalTheme.setTheme();
+                  }),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Observer(

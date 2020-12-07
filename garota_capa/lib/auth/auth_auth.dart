@@ -8,8 +8,6 @@ class AuthAuth {
 
   CollectionReference _user;
 
-  String nome;
-
   AuthAuth() {
     this._auth = FirebaseAuth.instance;
     this._user = FirebaseFirestore.instance.collection('users');

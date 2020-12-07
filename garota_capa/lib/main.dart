@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:garota_capa/pages/theme/global_theme.dart';
+import 'package:garota_capa/theme/global_theme.dart';
 import 'package:garota_capa/rotas/rotas.dart';
 import 'package:provider/provider.dart';
 
