@@ -1,141 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:garota_capa/models/user_model.dart';
+import 'package:garota_capa/pages/image/user_Image.dart';
 import 'package:garota_capa/pages/perfil/perfil_controller.dart';
 import 'package:garota_capa/repositories/user_repository.dart';
-import 'package:garota_capa/theme/global_theme.dart';
 import 'package:garota_capa/widgets/texts.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class _PerfilPageState extends State<PerfilPage> {
   PerfilController controller = PerfilController();
 
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  UserRepository _users = UserRepository();
 
   @override
   Widget build(BuildContext context) {
-    UserRepository _users = UserRepository();
-
-    final GlobalTheme globalTheme = Provider.of<GlobalTheme>(context);
-
-    return FutureBuilder<UserModel>(
-      future: _users.getUserData(),
-      builder: (_, snap) {
-        if (snap.hasError) {
-          return Center(
-            child: TextP("error"),
-          );
-        }
-
-        if (snap.connectionState == ConnectionState.waiting) {
-          return Container();
-        }
-
-        UserModel _user = snap.data;
-
-        _nomeController.text = _user.nome;
-        _emailController.text = _user.email;
-        return Scaffold(
-          appBar: AppBar(
-            title: TextH1('Perfil'),
-            actions: [
-              IconButton(
-                  icon: Icon(Icons.logout),
-                  onPressed: () {
-                    _users.signOut(context);
-                  })
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Center(
-                    child: Container(
-                      height: 280,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          'assets/menina-tumblr.jpg',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
+    return Scaffold(
+      appBar: AppBar(
+        title: TextH1('Perfil'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                _users.signOut(context);
+              })
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        UserImage(imagePath: 'assets/menina-tumblr.jpg'),
+                  )),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Container(
+                  height: 280,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.asset(
+                      'assets/menina-tumblr.jpg',
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                Container(
-                  child: Observer(
-                    builder: (_) => controller.onChange
-                        ? Center(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 50,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: TextField(
-                                    controller: _nomeController,
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder()),
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(fontSize: 19),
-                                  ),
-                                ),
-                                Container(height: 10),
-                                Container(
-                                  height: 50,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: TextField(
-                                    controller: _emailController,
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder()),
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(fontSize: 19),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Divider(height: 20),
-                                  TextH2('${_user.nome} Bueno'),
-                                  Divider(height: 20),
-                                  TextH2(_user.email),
-                                  Divider(height: 20),
-                                ],
-                              ),
-                            ),
-                          ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: RaisedButton(
-                      child: Text('Switch theme'),
-                      onPressed: () {
-                        globalTheme.setTheme();
-                      }),
-                )
-              ],
+              ),
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: Observer(
-                builder: (_) =>
-                    Icon(controller.onChange ? Icons.done : Icons.edit)),
-            onPressed: () {
-              controller.setOnChange(!controller.onChange);
-            },
-          ),
-        );
-      },
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Observer(
+            builder: (_) =>
+                Icon(controller.onChange ? Icons.done : Icons.edit)),
+        onPressed: () {
+          controller.setOnChange(!controller.onChange);
+        },
+      ),
     );
   }
 }

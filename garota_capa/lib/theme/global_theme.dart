@@ -8,7 +8,7 @@ String enumName(AppTheme anyEnum) {
   return anyEnum.toString().split('.')[1];
 }
 
-final appThemeData = {
+final Map<AppTheme, ThemeData> appThemeData = {
   AppTheme.White:
       ThemeData(brightness: Brightness.light, primaryColor: Colors.blue),
   AppTheme.Dark:

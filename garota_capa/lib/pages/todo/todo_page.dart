@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:garota_capa/theme/global_theme.dart';
 import 'package:garota_capa/widgets/texts.dart';
 import 'package:glutton/glutton.dart';
+import 'package:provider/provider.dart';
 
 class TodoPage extends StatelessWidget {
   final String nome;
@@ -10,6 +12,8 @@ class TodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalTheme _globalTheme = Provider.of<GlobalTheme>(context);
+
     return Scaffold(
       body: FutureBuilder<Object>(
           future: Glutton.have('isDark'),
@@ -20,7 +24,10 @@ class TodoPage extends StatelessWidget {
               children: [
                 TextH1(this.nome),
                 TextP(this.email),
-                Text(snapshot.data.toString())
+                RaisedButton(
+                  child: Text('switch theme'),
+                  onPressed: () => _globalTheme.setTheme(),
+                ),
               ],
             ));
           }),

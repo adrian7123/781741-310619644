@@ -77,7 +77,8 @@ class SignInPage extends StatelessWidget {
                                     final snackBar = SnackBar(
                                       content: Text('$result'),
                                     );
-                                    Scaffold.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
                                   }
                                 },
                                 child: Text('login'),
