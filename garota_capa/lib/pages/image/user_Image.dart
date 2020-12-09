@@ -8,6 +8,10 @@ class UserImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+      ),
       body: Container(
         margin: EdgeInsets.all(20),
         width: double.infinity,

@@ -1,14 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:garota_capa/repositories/todo_repository.dart';
 import 'package:garota_capa/theme/global_theme.dart';
 import 'package:garota_capa/rotas/rotas.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -17,12 +14,17 @@ class MyApp extends StatelessWidget {
       create: (_) => GlobalTheme(),
       child: Consumer<GlobalTheme>(
         builder: (context, theme, _) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Garota Capa',
-            // ignore: dead_code
-            theme: theme.themeSelected,
-            routes: rotas,
+          return GraphQLProvider(
+            client: todoRepository.client,
+            child: CacheProvider(
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Garota Capa',
+                // ignore: dead_code
+                theme: theme.themeSelected,
+                routes: rotas,
+              ),
+            ),
           );
         },
       ),

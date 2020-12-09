@@ -15,6 +15,10 @@ class TodoPage extends StatelessWidget {
     GlobalTheme _globalTheme = Provider.of<GlobalTheme>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       body: FutureBuilder<Object>(
           future: Glutton.have('isDark'),
           builder: (context, snapshot) {

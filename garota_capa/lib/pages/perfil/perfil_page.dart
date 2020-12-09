@@ -2,26 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:garota_capa/pages/image/user_Image.dart';
 import 'package:garota_capa/pages/perfil/perfil_controller.dart';
-import 'package:garota_capa/repositories/user_repository.dart';
 import 'package:garota_capa/widgets/texts.dart';
 
 class _PerfilPageState extends State<PerfilPage> {
   PerfilController controller = PerfilController();
-
-  UserRepository _users = UserRepository();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: TextH1('Perfil'),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () {
-                _users.signOut(context);
-              })
-        ],
+        actions: [IconButton(icon: Icon(Icons.logout), onPressed: () {})],
       ),
       body: SingleChildScrollView(
         child: Column(

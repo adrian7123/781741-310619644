@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:garota_capa/models/user_model.dart';
+import 'package:garota_capa/models/todo_model.dart';
 
 class AddUserWidget extends StatelessWidget {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
-  final Function(UserModel) callback;
+  final Function(TodoModel) callback;
 
   AddUserWidget(this.callback);
 
@@ -38,14 +38,15 @@ class AddUserWidget extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                UserModel user = new UserModel(
-                    nome: _nomeController.text == ''
-                        ? 'user'
-                        : _nomeController.text,
-                    email: _emailController.text == ''
-                        ? 'email'
-                        : _emailController.text,
-                    sobrenome: 'vgzhsd');
+                TodoModel user = new TodoModel(
+                  nome: _nomeController.text == ''
+                      ? 'user'
+                      : _nomeController.text,
+                  email: _emailController.text == ''
+                      ? 'email'
+                      : _emailController.text,
+                );
+
                 callback(user);
                 Navigator.pop(context);
               },
