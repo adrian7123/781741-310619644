@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
               },
               tooltip: 'Increment',
               child: Icon(Icons.add),
-            ), // This trailing comma makes auto-formatting nicer for build methods.
+            ),
           );
         });
   }
