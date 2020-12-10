@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:garota_capa/models/todo_model.dart';
 import 'package:garota_capa/models/user_model.dart';
 import 'package:garota_capa/repositories/todo_repository.dart';
 import 'package:garota_capa/repositories/user_repository.dart';
@@ -9,27 +10,29 @@ part 'home_controller.g.dart';
 class HomeController = _HomeController with _$HomeController;
 
 abstract class _HomeController with Store {
-  UserRepository user = UserRepository();
+  CollectionReference todo;
+  Stream<List<TodoModel>> todos;
 
-  @observable
-  CollectionReference todos = TodoRepository.todo;
+  Stream<UserModel> user;
 
-  @action
-  Future<void> increment(UserModel user) {
-    var _currentDate = new DateTime.now();
-    return todos
-        .add({
-          'nome': user.nome,
-          'email': user.email,
-          'sobrenome': user.sobrenome,
-          'created_at': _currentDate,
-        })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
+  _HomeController() {
+    _init();
   }
 
-  void remove(String doc) {
-    todos.doc(doc).delete();
-    print('User Deleted');
+  @action
+  Future<void> _init() async {
+    todo = todoRepository.todo;
+    user = userRepository.getUserData();
+    todos = todoRepository.getTodos();
+  }
+
+  @action
+  void increment(TodoModel user) {
+    todoRepository.add(user);
+  }
+
+  @action
+  void remove(String id) {
+    todoRepository.delete(id);
   }
 }

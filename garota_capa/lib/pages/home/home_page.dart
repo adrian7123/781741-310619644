@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:garota_capa/models/todo_model.dart';
 import 'package:garota_capa/models/user_model.dart';
 import 'package:garota_capa/pages/todo/todo_page.dart';
 import 'package:garota_capa/widgets/add_user.dart';
@@ -14,8 +13,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: controller.user.getUserData(),
+    return StreamBuilder(
+        stream: controller.user,
         builder: (_, snap) {
           if (snap.hasError) {
             return Center(
@@ -42,41 +41,43 @@ class HomePage extends StatelessWidget {
               ],
             ),
             body: Container(
-              child: Observer(
-                builder: (_) => StreamBuilder<QuerySnapshot>(
-                  stream: controller.todos.snapshots(),
-                  builder: (_, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: TextP("error"),
-                      );
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return ListView(
-                      children: snapshot.data.docs
-                          .map((DocumentSnapshot doc) => GestureDetector(
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            TodoPage(
-                                                nome: doc.data()['nome'],
-                                                email: doc.data()['email']))),
-                                child: CardWidget(
-                                  item: doc.id,
-                                  nome: doc.data()['nome'],
-                                  email: doc.data()['email'],
-                                  onDimissed: controller.remove,
-                                ),
-                              ))
-                          .toList(),
+              child: StreamBuilder<List<TodoModel>>(
+                stream: controller.todos,
+                builder: (_, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: TextP("error ${snapshot.error}"),
                     );
-                  },
-                ),
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  List<TodoModel> _todo = snapshot.data;
+
+                  return ListView.builder(
+                    itemCount: _todo.length,
+                    itemBuilder: (_, i) => GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => TodoPage(
+                            nome: _todo[i].nome,
+                            email: _todo[i].email,
+                          ),
+                        ),
+                      ),
+                      child: CardWidget(
+                        item: _todo[i].id,
+                        nome: _todo[i].nome,
+                        email: _todo[i].email,
+                        onDimissed: controller.remove,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
             floatingActionButton: FloatingActionButton(

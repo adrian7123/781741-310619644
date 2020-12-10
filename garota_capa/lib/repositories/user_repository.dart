@@ -14,18 +14,14 @@ class UserRepository {
     this._user = FirebaseFirestore.instance.collection('users');
   }
 
-  Future<UserModel> getUserData() async {
-    UserModel _userModel;
-
-    await _user.doc(email).get().then((snap) {
-      _userModel = UserModel(
+  Stream<UserModel> getUserData() {
+    return _user.doc(email).snapshots().map((snap) {
+      return UserModel(
         nome: snap.data()['nome'],
         email: snap.data()['email'],
         sobrenome: 'zgvdhj',
       );
     });
-
-    return _userModel;
   }
 
   String get email => _auth.currentUser.email;
@@ -39,3 +35,5 @@ class UserRepository {
     Navigator.pushReplacementNamed(context, '/');
   }
 }
+
+UserRepository userRepository = UserRepository();
