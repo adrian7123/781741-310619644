@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:garota_capa/models/todo_model.dart';
-import 'package:garota_capa/repositories/interfaces/todo_interface_repository.dart';
+import 'package:garota_capa/repositories/rules/todo_interface_repository.dart';
 
 class TodoRepository extends ITodoRepository {
   CollectionReference todo = FirebaseFirestore.instance.collection('todo');

@@ -19,7 +19,6 @@ class UserRepository {
       return UserModel(
         nome: snap.data()['nome'],
         email: snap.data()['email'],
-        sobrenome: 'zgvdhj',
       );
     });
   }
