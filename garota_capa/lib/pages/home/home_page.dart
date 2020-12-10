@@ -5,14 +5,14 @@ import 'package:garota_capa/pages/todo/todo_page.dart';
 import 'package:garota_capa/widgets/add_user.dart';
 import 'package:garota_capa/widgets/card.dart';
 import 'package:garota_capa/widgets/texts.dart';
+import 'package:provider/provider.dart';
 
 import './home_controller.dart';
 
 class HomePage extends StatelessWidget {
-  final controller = HomeController();
-
   @override
   Widget build(BuildContext context) {
+    HomeController controller = Provider.of<HomeController>(context);
     return StreamBuilder(
         stream: controller.user,
         builder: (_, snap) {

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:glutton/glutton.dart';
 
 enum AppTheme { White, Dark, LightGreen, DarkGreen }
 
@@ -20,12 +21,30 @@ final Map<AppTheme, ThemeData> appThemeData = {
 };
 
 class GlobalTheme with ChangeNotifier {
-  ThemeData themeSelected = appThemeData[AppTheme.White];
+  ThemeData themeSelected;
 
-  void setTheme() async {
-    themeSelected = themeSelected == appThemeData[AppTheme.Dark]
+  GlobalTheme() {
+    _init();
+  }
+
+  Future<void> _init() async {
+    if (await Glutton.have('isDark') != true) Glutton.eat('isDark', false);
+
+    themeSelected = await Glutton.vomit('isDark')
         ? appThemeData[AppTheme.White]
         : appThemeData[AppTheme.Dark];
+  }
+
+  void setTheme() async {
+    if (await Glutton.vomit('isDark')) {
+      themeSelected = appThemeData[AppTheme.White];
+      Glutton.eat('isDark', false);
+    } else {
+      themeSelected = appThemeData[AppTheme.Dark];
+      Glutton.eat('isDark', true);
+    }
+
+    print(await Glutton.vomit('isDark'));
 
     notifyListeners();
   }
