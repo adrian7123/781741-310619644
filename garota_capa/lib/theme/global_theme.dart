@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:glutton/glutton.dart';
 
 enum AppTheme { White, Dark, LightGreen, DarkGreen }
@@ -28,23 +29,41 @@ class GlobalTheme with ChangeNotifier {
   }
 
   Future<void> _init() async {
-    if (await Glutton.have('isDark') != true) Glutton.eat('isDark', false);
+    if (await Glutton.have('isDark') != true) {
+      Glutton.eat('isDark', false);
+    }
+
+    print(await Glutton.vomit('isDark'));
 
     themeSelected = await Glutton.vomit('isDark')
-        ? appThemeData[AppTheme.White]
-        : appThemeData[AppTheme.Dark];
+        ? appThemeData[AppTheme.Dark]
+        : appThemeData[AppTheme.White];
+
+    notifyListeners();
   }
 
   void setTheme() async {
     if (await Glutton.vomit('isDark')) {
       themeSelected = appThemeData[AppTheme.White];
       Glutton.eat('isDark', false);
+
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(
+          systemNavigationBarColor: Colors.white,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ),
+      );
     } else {
       themeSelected = appThemeData[AppTheme.Dark];
       Glutton.eat('isDark', true);
-    }
 
-    print(await Glutton.vomit('isDark'));
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(
+          systemNavigationBarColor: Colors.black,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
+      );
+    }
 
     notifyListeners();
   }
