@@ -4,4 +4,5 @@ abstract class ITodoRepository {
   Stream<List<TodoModel>> getTodos();
   void delete(String id);
   void add(TodoModel todoModel);
+  void update(String id);
 }

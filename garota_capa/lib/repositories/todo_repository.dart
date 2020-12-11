@@ -5,6 +5,7 @@ import 'package:garota_capa/repositories/rules/todo_interface_repository.dart';
 class TodoRepository extends ITodoRepository {
   CollectionReference todo = FirebaseFirestore.instance.collection('todo');
 
+  @override
   Stream<List<TodoModel>> getTodos() {
     return todo.snapshots().map(
           (snap) => snap.docs
@@ -31,6 +32,9 @@ class TodoRepository extends ITodoRepository {
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
+
+  @override
+  void update(String id) {}
 
   @override
   void delete(String id) {

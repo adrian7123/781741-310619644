@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:garota_capa/models/todo_model.dart';
 import 'package:garota_capa/models/user_model.dart';
+import 'package:garota_capa/pages/scaffold_loader/scaffold_loader.dart';
 import 'package:garota_capa/pages/todo/todo_page.dart';
 import 'package:garota_capa/widgets/add_user.dart';
 import 'package:garota_capa/widgets/card.dart';
@@ -23,7 +24,7 @@ class HomePage extends StatelessWidget {
           }
 
           if (snap.connectionState == ConnectionState.waiting) {
-            return Container();
+            return ScaffoldLoader();
           }
 
           UserModel _user = snap.data;

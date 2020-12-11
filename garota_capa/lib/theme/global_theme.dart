@@ -23,15 +23,15 @@ class GlobalTheme with ChangeNotifier {
     if (await Glutton.vomit('isDark')) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
-          systemNavigationBarColor: Colors.white,
-          systemNavigationBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: Colors.black,
+          systemNavigationBarIconBrightness: Brightness.light,
         ),
       );
     } else {
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark.copyWith(
-          systemNavigationBarColor: Colors.black,
-          systemNavigationBarIconBrightness: Brightness.light,
+        SystemUiOverlayStyle.light.copyWith(
+          systemNavigationBarColor: Colors.lightBlue,
+          systemNavigationBarIconBrightness: Brightness.dark,
         ),
       );
     }
@@ -45,9 +45,9 @@ class GlobalTheme with ChangeNotifier {
       Glutton.eat('isDark', false);
 
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark.copyWith(
+        SystemUiOverlayStyle.light.copyWith(
           systemNavigationBarColor: Colors.white,
-          systemNavigationBarIconBrightness: Brightness.light,
+          systemNavigationBarIconBrightness: Brightness.dark,
         ),
       );
     } else {
@@ -55,9 +55,9 @@ class GlobalTheme with ChangeNotifier {
       Glutton.eat('isDark', true);
 
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.light.copyWith(
+        SystemUiOverlayStyle.dark.copyWith(
           systemNavigationBarColor: Colors.black,
-          systemNavigationBarIconBrightness: Brightness.dark,
+          systemNavigationBarIconBrightness: Brightness.light,
         ),
       );
     }
