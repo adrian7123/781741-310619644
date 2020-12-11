@@ -30,7 +30,7 @@ class GlobalTheme with ChangeNotifier {
     } else {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light.copyWith(
-          systemNavigationBarColor: Colors.lightBlue,
+          systemNavigationBarColor: Colors.white,
           systemNavigationBarIconBrightness: Brightness.dark,
         ),
       );
