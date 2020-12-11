@@ -1,4 +1,4 @@
-package com.example.garota_capa
+package com.buenos.garota_capa
 
 import io.flutter.embedding.android.FlutterActivity
 

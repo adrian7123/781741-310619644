@@ -7,8 +7,6 @@ class UserRepository {
   FirebaseAuth _auth;
   CollectionReference _user;
 
-  String nome;
-
   UserRepository() {
     this._auth = FirebaseAuth.instance;
     this._user = FirebaseFirestore.instance.collection('users');
