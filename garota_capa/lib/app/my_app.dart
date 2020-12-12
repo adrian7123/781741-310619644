@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:garota_capa/pages/home/home_controller.dart';
 import 'package:garota_capa/pages/perfil/perfil_controller.dart';
-import 'package:garota_capa/rotas/rotas.dart';
 import 'package:garota_capa/theme/global_theme.dart';
 import 'package:provider/provider.dart';
+
+import './rotas/rotas.dart';
 
 class MyApp extends StatelessWidget {
   @override
