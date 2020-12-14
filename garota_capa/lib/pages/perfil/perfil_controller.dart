@@ -27,7 +27,8 @@ abstract class _PerfilController with Store {
   void setOnChange(bool value) => this.onChange = value;
 
   @action
-  void signOut(BuildContext context) {
-    userRepository.signOut(context);
+  Future<void> signOut(BuildContext context) async {
+    await userRepository.signOut(context);
+    Navigator.pushReplacementNamed(context, '/');
   }
 }

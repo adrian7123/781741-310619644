@@ -31,9 +31,8 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  void signOut(BuildContext context) async {
+  Future<void> signOut(BuildContext context) async {
     await _auth.signOut();
-    Navigator.pushReplacementNamed(context, '/');
   }
 }
 

@@ -17,8 +17,8 @@ class _PerfilPageState extends State<PerfilPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () {
-              controller.signOut(context);
+            onPressed: () async {
+              await controller.signOut(context);
             },
           ),
         ],
@@ -45,7 +45,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 ),
               ),
             ),
-            StreamBuilder(
+            StreamBuilder<UserModel>(
               stream: controller.user,
               builder: (_, snap) {
                 if (snap.hasError) {
@@ -60,7 +60,15 @@ class _PerfilPageState extends State<PerfilPage> {
 
                 UserModel _user = snap.data;
 
-                return Text('$_user');
+                return Container(
+                  margin: EdgeInsets.all(40),
+                  child: Column(
+                    children: [
+                      TextH1('${_user.nome}'),
+                      TextH2(_user.email),
+                    ],
+                  ),
+                );
               },
             )
           ],

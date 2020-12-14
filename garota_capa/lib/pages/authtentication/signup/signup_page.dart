@@ -18,6 +18,7 @@ class SignUpPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: TextH1(
             'Cadastre-se',
             color: Colors.white,

@@ -15,6 +15,12 @@ class SignInPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return Container();
+            },
+          ),
           title: TextH1(
             'Login',
             color: Colors.white,
@@ -92,7 +98,7 @@ class SignInPage extends StatelessWidget {
                           style: TextStyle(color: Colors.blue, fontSize: 30),
                         ),
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, 'signUp');
+                          Navigator.pushNamed(context, 'signUp');
                         },
                       ),
                     )
